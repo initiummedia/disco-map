@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="PROJECT" libraries="{2011DiscoCA-geojson, 2011DiscoResult_concise, 2011DiscoVotingResults, 2011_candidate_profile_concise, jquery, leaflet, party_to_camp}" />
+  </component>
+</project>

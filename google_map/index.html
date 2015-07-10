@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>District Council Map 2015</title>
+    <link type="text/css" rel="stylesheet" href="style.css" />
+    <style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&language=zh_HK"></script>
+    <script src="../data/2011_disco_ca.json"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+<div id="map-canvas"></div>
+<div id="legend">
+    <span id="description">Dominant political alignment in 2015:</span>
+    <div class="legend" id="far_right_legend">Far right</div>
+    <div class="legend" id="middle_right_legend">Middle right</div>
+    <div class="legend" id="middle_legend">Middle</div>
+    <div class="legend" id="middle_left_legend">Middle left</div>
+    <div class="legend" id="far_left_legend">Far left</div>
+</div>
+</body>
+</html>

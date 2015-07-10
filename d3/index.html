@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Disco Election Map 2011</title>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://localhost:8000/data/2011DiscoResult_concise.js" charset="utf-8"></script>
+    <script src="http://localhost:8000/data/2011DiscoCA-geojson.js" charset="utf-8"></script>
+    <script src="http://localhost:8000/data/2011_candidate_profile_concise.js" charset="utf-8"></script>
+    <script src="http://localhost:8000/data/party_to_camp.js" charset="utf-8"></script>
+    <style>
+        #map { height: 900px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([22.37, 114.17], 11);
+
+        function _getWinner(code) {
+            var winner = '';
+            for (var i=0; i<electionResult.length; i++) {
+                var entry = electionResult[i];
+                if (entry.ca_code === code) {
+                    winner = entry.winner_name_chi;
+                    break;
+                }
+            }
+            return winner;
+        }
+
+        function _getParty(candidate_name) {
+            for (var i=0; i<candidate_profile_collection.length; i++) {
+                var entry = candidate_profile_collection[i];
+                if (entry.candidate_name_chi === candidate_name) {
+                    return entry.party
+                }
+            }
+            return ''
+        }
+
+        function _getCamp(party){
+            for (var i=0; i<partyCampData.length; i++){
+                var entry = partyCampData[i];
+                if (entry[0] === party) {
+                    return entry[1];
+                }
+            }
+            return ''
+        }
+
+        function _chooseColor(camp){
+            if (camp === 'demo') {
+                return "#FF0"
+            } else if (camp === 'esta') {
+                return "#F00"
+            } else if (camp === 'inde') {
+                return "#EEE"
+            } else if (camp === 'undeclared') {
+                return "#000"
+            } else {
+                return "#000"
+            }
+        }
+
+        function _getStyle(feature) {
+            var areaCode = feature.properties.CODE;
+            var winner = _getWinner(areaCode, electionResult);
+            var party = _getParty(winner);
+            var camp = _getCamp(party);
+            var color = _chooseColor(camp);
+            return {
+                "color": color,
+                "weight": "1",
+            }
+        }
+
+        for (var i=0;i<geojsonFeatureCollection.features.length;i++) {
+            var feature = geojsonFeatureCollection.features[i];
+            L.geoJson(feature, {
+                style: _getStyle(feature)
+            }).addTo(map);
+        }
+    </script>
+</body>
+</html>
